@@ -1,0 +1,68 @@
+IT4biz iOS Module
+www.it4biz.com.br
+
+1) Alterar o arquivo PUCLogin.jsp disponível em /biserver-ce/tomcat/webapps/pentaho/jsp
+
+Buscar pela palavra "iPad"
+
+Alterar de:
+
+  if(/(iPad|iPod|iPhone)/.test(navigator.userAgent) || window.orientation !== undefined){
+    returnLocation = CONTEXT_PATH+"content/analyzer/selectSchema";
+  }
+
+Para:
+
+<!--  IT4biz -->
+  if(/(iPad|iPod|iPhone)/.test(navigator.userAgent) || window.orientation !== undefined){
+    returnLocation = CONTEXT_PATH+"iOS";
+  }
+<!--  IT4biz -->
+
+Essa alteração vai direcionar todos os usuários do portal que acessarem através de um iPad, iPod ou iPhone para a página/servlet iOS
+
+2) Crie o arquivo iOS.jsp dentro de biserver-ce/tomcat/webapps/pentaho/jsp/it4biz
+
+Uma forma fácil de customizar sem gerar problemas com as versões futuras é criar uma pasta com todas as suas customizações, seguindo essa idéia
+criamos a pasta /it4biz dentro da pasta /biserver-ce/tomcat/webapps/pentaho/jsp/ ficando biserver-ce/tomcat/webapps/pentaho/jsp/it4biz
+
+3) Desligue o BI Server e Registre o arquivo iOS.jsp no arquivo web.xml localizado na pasta /biserver-ce/tomcat/webapps/pentaho/WEB-INF
+
+Adicione as linhas abaixo depois de <!-- insert additional servlets -->
+
+Ficando:
+
+  <!-- insert additional servlets -->
+  
+  <!-- IT4biz - iPad, iPod and iPhone -->
+   <servlet>
+       <servlet-name>iOS</servlet-name>
+	   <jsp-file>/jsp/it4biz/iOS.jsp</jsp-file>
+   </servlet>	
+  <!-- IT4biz - iPad, iPod and iPhone -->
+
+
+Adicione as linhas abaixo depois de <!-- insert additional servlet mappings -->
+
+Ficando:
+
+	<!-- insert additional servlet mappings -->
+	
+    <!-- IT4biz - iPad, iPod and iPhone -->
+    <servlet-mapping>
+	   <servlet-name>iOS</servlet-name>
+	   <url-pattern>/iOS</url-pattern>
+    </servlet-mapping>
+    <!-- IT4biz - iPad, iPod and iPhone -->
+
+4) Reinicie o BI Server e faça um teste acessando http://localhost:8080/pentaho/iOS
+
+Isso deve mostrar o conteúdo da sua página iOS.jsp registrada no Pentaho BI Server como uma nova página JSP.
+
+5) Customize da forma que você desejar a página iOS pensando nas necessidades de seus usuários Apple (iPad, iPhone e iPod)
+
+6) Faça os testes com um dispositivo iOS (iPad, iPhone e iPod)
+
+
+
+
